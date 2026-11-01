@@ -489,7 +489,7 @@ function buildIndex() {
 }
 function getPack(k) {
   if (!PACKS.has(k)) {
-    const p = fetch("p/" + k + ".json").then(r => { if (!r.ok) throw new Error("pack " + k + " " + r.status); return r.json(); })
+    const p = fetch(k + ".json").then(r => { if (!r.ok) throw new Error("pack " + k + " " + r.status); return r.json(); })
       .catch(e => { PACKS.delete(k); throw e; });
     PACKS.set(k, p);
   }
@@ -1350,10 +1350,10 @@ async function boot() {
   try { const t = localStorage.getItem("lama-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) { }
   S = loadLocal() || defState();
   app().innerHTML = '<div class="wrap" style="padding-top:40px;text-align:center"><div style="width:110px;margin:0 auto">' + mascot("cat", "cheer") + '</div><p>لحظة… نجهّز لك الموقع 🌸</p></div>';
-  try { META = await (await fetch("data/meta.json")).json(); }
+  try { META = await (await fetch("meta.json")).json(); }
   catch (e) { app().innerHTML = '<div class="wrap" style="padding-top:40px"><div class="card">⚠️ ما قدرت أحمل بيانات الأسئلة. حدّثي الصفحة.</div></div>'; return; }
-  try { DDDATA = await (await fetch("data/dd.json")).json(); } catch (e) { DDDATA = {}; }
-  try { EXP = await (await fetch("data/exp.json")).json(); } catch (e) { EXP = {}; }
+  try { DDDATA = await (await fetch("dd.json")).json(); } catch (e) { DDDATA = {}; }
+  try { EXP = await (await fetch("exp.json")).json(); } catch (e) { EXP = {}; }
   buildIndex();
   if (!S.setup) showOnboarding(); else if (!S.greet || S.greet !== todayK()) { render(); showSplash(); } else render();
   initCaps();
